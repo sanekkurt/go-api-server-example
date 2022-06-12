@@ -1,0 +1,3 @@
+server:
+  listen: {{ .Values.service.targetPort }}
+  debug: {{ .Values.server.debug }}
