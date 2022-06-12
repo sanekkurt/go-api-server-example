@@ -1,4 +1,4 @@
-name: CI
+name: CI/CD
 
 on:
   push:
@@ -28,3 +28,20 @@ jobs:
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/go-api-server-example:latest
           cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/go-api-server-example:buildcache
           cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/go-api-server-example:buildcache,mode=max
+
+  deploy:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Helm Deploy
+        uses: vimeda/helm@v1.6.8
+        with:
+          helm: 'helm3'
+          release: 'test'
+          namespace: 'default'
+          chart: './.chart'
+        env:
+          KUBECONFIG_FILE: '${{ secrets.KUBECONFIG }}'
+
