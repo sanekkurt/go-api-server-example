@@ -1,4 +1,4 @@
-name: Go
+name: ci-cd
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
 
-  build-app:
+  ci-cd:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
